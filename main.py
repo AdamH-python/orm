@@ -19,6 +19,12 @@ django.setup()
 # Import your models for use in your script
 from db.models import *
 
+from faker import Faker
+from db.models import *
+from django.contrib.auth.models import User
+import random
+from model_bakery.recipe import Recipe
+
 ############################################################################
 ## START OF APPLICATION
 ############################################################################
@@ -44,3 +50,26 @@ User.objects.create(name='Robert')
 
 for u in User.objects.all():
     print(f'ID: {u.id} \tUsername: {u.name}')
+
+fake = Faker()
+from faker.providers import address, currency, person, phone_number
+
+JOB_CHOICES = [
+    ("RE", "Restocker"),
+    ("MA", "Manager"),
+    ("CO", "Cook"),
+    ("RC", "Receipt Checker"),
+    ("CA", "Cashier"),
+]
+
+for i in range(40):
+    a = Store(address = fake.address())
+for i in range(40):
+    edate = fake.date()
+    b = Employee(employee_name = fake.full_name(), store = fake.random_int(min = 0, max = 40), occupation = random.choice(JOB_CHOICES))
+    c = Inventory(store_id = fake.random_int(min = 0, max = 40), stock = fake.random_int(min = 0, max = 15000), cost = fake.random_int(), product_name = fake.random_object_name())
+    d = Member(expiration_date = edate, member_name = fake.full_name(), member_address = fake.address())
+    e = Order(customer = fake.random_int(min = 0, max = 40), bill = fake.pricetag(), before_date = edate)
+    f = Item(order_id = fake.random_int(min = 0, max = 40), store_id = fake.random_int(min = 0, max = 40), item_id = fake.random_int(min = 0, max = 40))
+    g = Food_Court(store_id = fake.random_int(min = 0, max = 40), name = fake.random_object_name(), price = fake.random_int())
+    
