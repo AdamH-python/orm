@@ -51,8 +51,9 @@ class Article(models.Model):
     class Meta:
         ordering = ["headline"]
 
-
-
+##########################################
+### Converting from postgresql into Django
+##########################################
 
 class Store(models.Model):
     #store_id = models.BigAutoField(primary_key=True)
